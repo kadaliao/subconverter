@@ -1,7 +1,7 @@
 name: Build to Gist
 on: 
   push:
-    branches: [ master ]
+    branches: [ dev ]
 jobs:
   build:
     runs-on: ubuntu-latest
