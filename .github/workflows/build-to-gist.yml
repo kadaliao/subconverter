@@ -27,7 +27,7 @@ jobs:
           const fs = require('fs');
           const gistId = process.env.GIST_ID;
           const content = fs.readFileSync('output/jms.yaml', 'utf8');
-          const gists = github.rest.gists;
+          const gists = github.gists;
           const files = {
             'jms.yaml': { content: content }
           };
