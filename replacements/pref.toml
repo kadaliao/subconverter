@@ -219,6 +219,12 @@ type = "clash-domain"
 # interval = 86400
 
 [[rulesets]]
+group = "🛑 全球拦截"
+ruleset = "snippets/my-reject-domains.txt"
+type = "clash-domain"
+# interval = 86400
+
+[[rulesets]]
 import = "snippets/rulesets.toml"
 
 [template]
