@@ -12,13 +12,13 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-    - name: Update jms.ini file
+    - name: Update generate.ini url
       run: |
-        echo "url=${{ secrets.URL }}" >> replacements/profiles/jms.ini
+        echo "url=${{ secrets.URL }}" >> replacements/generate.ini && cat replacements/generate.ini
     - name: Build Docker image
       run: docker build -t my-image .
     - name: Run command
-      run: docker run -d --rm -v "$(pwd)"/output:/base/output my-image subconverter -g
+      run: docker run --rm -v "$(pwd)"/output:/base/output my-image subconverter -g
     - name: Upload to gist
       uses: actions/github-script@v4
       with:

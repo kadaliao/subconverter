@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <numeric>
+#include <iostream>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -14,14 +15,14 @@ std::vector<std::string> split(const std::string &s, const std::string &seperato
     std::vector<std::string> result;
     string_size i = 0;
 
-    while(i != s.size())
+    while (i != s.size())
     {
         int flag = 0;
-        while(i != s.size() && flag == 0)
+        while (i != s.size() && flag == 0)
         {
             flag = 1;
-            for(char x : seperator)
-                if(s[i] == x)
+            for (char x : seperator)
+                if (s[i] == x)
                 {
                     ++i;
                     flag = 0;
@@ -31,20 +32,20 @@ std::vector<std::string> split(const std::string &s, const std::string &seperato
 
         flag = 0;
         string_size j = i;
-        while(j != s.size() && flag == 0)
+        while (j != s.size() && flag == 0)
         {
-            for(char x : seperator)
-                if(s[j] == x)
+            for (char x : seperator)
+                if (s[j] == x)
                 {
                     flag = 1;
                     break;
                 }
-            if(flag == 0)
+            if (flag == 0)
                 ++j;
         }
-        if(i != j)
+        if (i != j)
         {
-            result.push_back(s.substr(i, j-i));
+            result.push_back(s.substr(i, j - i));
             i = j;
         }
     }
@@ -54,26 +55,26 @@ std::vector<std::string> split(const std::string &s, const std::string &seperato
 std::string UTF8ToCodePoint(const std::string &data)
 {
     std::stringstream ss;
-    for(string_size i = 0; i < data.size(); i++)
+    for (string_size i = 0; i < data.size(); i++)
     {
         int charcode = data[i] & 0xff;
-        if((charcode >> 7) == 0)
+        if ((charcode >> 7) == 0)
         {
-            ss<<data[i];
+            ss << data[i];
         }
-        else if((charcode >> 5) == 6)
+        else if ((charcode >> 5) == 6)
         {
-            ss<<"\\u"<<std::hex<<((data[i + 1] & 0x3f) | (data[i] & 0x1f) << 6);
+            ss << "\\u" << std::hex << ((data[i + 1] & 0x3f) | (data[i] & 0x1f) << 6);
             i++;
         }
-        else if((charcode >> 4) == 14)
+        else if ((charcode >> 4) == 14)
         {
-            ss<<"\\u"<<std::hex<<((data[i + 2] & 0x3f) | (data[i + 1] & 0x3f) << 6 | (data[i] & 0xf) << 12);
+            ss << "\\u" << std::hex << ((data[i + 2] & 0x3f) | (data[i + 1] & 0x3f) << 6 | (data[i] & 0xf) << 12);
             i += 2;
         }
-        else if((charcode >> 3) == 30)
+        else if ((charcode >> 3) == 30)
         {
-            ss<<"\\u"<<std::hex<<((data[i + 3] & 0x3f) | (data[i + 2] & 0x3f) << 6 | (data[i + 1] & 0x3f) << 12 | (data[i] & 0x7) << 18);
+            ss << "\\u" << std::hex << ((data[i + 3] & 0x3f) | (data[i + 2] & 0x3f) << 6 | (data[i + 1] & 0x3f) << 12 | (data[i] & 0x7) << 18);
             i += 3;
         }
     }
@@ -83,25 +84,27 @@ std::string UTF8ToCodePoint(const std::string &data)
 std::string toLower(const std::string &str)
 {
     std::string result;
-    std::transform(str.begin(), str.end(), std::back_inserter(result), [](unsigned char c) { return std::tolower(c); });
+    std::transform(str.begin(), str.end(), std::back_inserter(result), [](unsigned char c)
+                   { return std::tolower(c); });
     return result;
 }
 
 std::string toUpper(const std::string &str)
 {
     std::string result;
-    std::transform(str.begin(), str.end(), std::back_inserter(result), [](unsigned char c) { return std::toupper(c); });
+    std::transform(str.begin(), str.end(), std::back_inserter(result), [](unsigned char c)
+                   { return std::toupper(c); });
     return result;
 }
 
 void processEscapeChar(std::string &str)
 {
     string_size pos = str.find('\\');
-    while(pos != str.npos)
+    while (pos != str.npos)
     {
-        if(pos == str.size())
+        if (pos == str.size())
             break;
-        switch(str[pos + 1])
+        switch (str[pos + 1])
         {
         case 'n':
             str.replace(pos, 2, "\n");
@@ -114,7 +117,7 @@ void processEscapeChar(std::string &str)
             break;
         default:
             /// ignore others for backward compatibility
-            //str.erase(pos, 1);
+            // str.erase(pos, 1);
             break;
         }
         pos = str.find('\\', pos + 1);
@@ -124,9 +127,9 @@ void processEscapeChar(std::string &str)
 void processEscapeCharReverse(std::string &str)
 {
     string_size pos = 0;
-    while(pos < str.size())
+    while (pos < str.size())
     {
-        switch(str[pos])
+        switch (str[pos])
         {
         case '\n':
             str.replace(pos, 1, "\\n");
@@ -149,11 +152,11 @@ int parseCommaKeyValue(const std::string &input, const std::string &separator, s
 {
     string_size bpos = 0, epos = input.find(',');
     std::string kv;
-    while(bpos < input.size())
+    while (bpos < input.size())
     {
-        if(epos == std::string::npos)
+        if (epos == std::string::npos)
             epos = input.size();
-        else if(epos && input[epos - 1] == '\\')
+        else if (epos && input[epos - 1] == '\\')
         {
             kv += input.substr(bpos, epos - bpos - 1);
             kv += ',';
@@ -163,7 +166,7 @@ int parseCommaKeyValue(const std::string &input, const std::string &separator, s
         }
         kv += input.substr(bpos, epos - bpos);
         string_size eqpos = kv.find('=');
-        if(eqpos == std::string::npos)
+        if (eqpos == std::string::npos)
             result.emplace_back("{NONAME}", kv);
         else
             result.emplace_back(kv.substr(0, eqpos), kv.substr(eqpos + 1));
@@ -171,10 +174,10 @@ int parseCommaKeyValue(const std::string &input, const std::string &separator, s
         bpos = epos + 1;
         epos = input.find(',', bpos);
     }
-    if(kv.size())
+    if (kv.size())
     {
         string_size eqpos = kv.find('=');
-        if(eqpos == std::string::npos)
+        if (eqpos == std::string::npos)
             result.emplace_back("{NONAME}", kv);
         else
             result.emplace_back(kv.substr(0, eqpos), kv.substr(eqpos + 1));
@@ -196,7 +199,7 @@ void trimSelfOf(std::string &str, char target, bool before, bool after)
     str.erase(0, pos);
 }
 
-std::string trimOf(const std::string& str, char target, bool before, bool after)
+std::string trimOf(const std::string &str, char target, bool before, bool after)
 {
     if (!before && !after)
         return str;
@@ -217,7 +220,7 @@ std::string trimOf(const std::string& str, char target, bool before, bool after)
     return str.substr(pos);
 }
 
-std::string trim(const std::string& str, bool before, bool after)
+std::string trim(const std::string &str, bool before, bool after)
 {
     return trimOf(str, ' ', before, after);
 }
@@ -231,16 +234,16 @@ std::string trimWhitespace(const std::string &str, bool before, bool after)
 {
     static std::string whitespaces(" \t\f\v\n\r");
     string_size bpos = 0, epos = str.size();
-    if(after)
+    if (after)
     {
         epos = str.find_last_not_of(whitespaces);
-        if(epos == std::string::npos)
+        if (epos == std::string::npos)
             return "";
     }
-    if(before)
+    if (before)
     {
         bpos = str.find_first_not_of(whitespaces);
-        if(bpos == std::string::npos)
+        if (bpos == std::string::npos)
             return "";
     }
     return str.substr(bpos, epos - bpos + 1);
@@ -248,7 +251,8 @@ std::string trimWhitespace(const std::string &str, bool before, bool after)
 
 std::string getUrlArg(const std::string &url, const std::string &request)
 {
-    //std::smatch result;
+    std::cout << "getUrlArg2" << '\n';
+    // std::smatch result;
     /*
     if (regex_search(url.cbegin(), url.cend(), result, std::regex(request + "=(.*?)&")))
     {
@@ -281,12 +285,12 @@ std::string getUrlArg(const std::string &url, const std::string &request)
     */
     std::string pattern = request + "=";
     std::string::size_type pos = url.size();
-    while(pos)
+    while (pos)
     {
         pos = url.rfind(pattern, pos);
-        if(pos != url.npos)
+        if (pos != url.npos)
         {
-            if(pos == 0 || url[pos - 1] == '&' || url[pos - 1] == '?')
+            if (pos == 0 || url[pos - 1] == '&' || url[pos - 1] == '?')
             {
                 pos += pattern.size();
                 return url.substr(pos, url.find("&", pos) - pos);
@@ -302,16 +306,21 @@ std::string getUrlArg(const std::string &url, const std::string &request)
 std::string getUrlArg(const string_multimap &url, const std::string &request)
 {
     auto it = url.find(request);
-    if(it != url.end())
+    if (it != url.end())
+    {
+        std::cout << "Key: " << it->first << ", Value: " << it->second << std::endl;
         return it->second;
+    }
+
+    std::cout << "Key: " << request << " not found" << std::endl;
     return "";
 }
 
 std::string replaceAllDistinct(std::string str, const std::string &old_value, const std::string &new_value)
 {
-    for(std::string::size_type pos(0); pos != std::string::npos; pos += new_value.length())
+    for (std::string::size_type pos(0); pos != std::string::npos; pos += new_value.length())
     {
-        if((pos = str.find(old_value, pos)) != std::string::npos)
+        if ((pos = str.find(old_value, pos)) != std::string::npos)
             str.replace(pos, old_value.length(), new_value);
         else
             break;
@@ -321,7 +330,7 @@ std::string replaceAllDistinct(std::string str, const std::string &old_value, co
 
 void removeUTF8BOM(std::string &data)
 {
-    if(data.compare(0, 3, "\xEF\xBB\xBF") == 0)
+    if (data.compare(0, 3, "\xEF\xBB\xBF") == 0)
         data = data.substr(3);
 }
 
@@ -368,9 +377,9 @@ std::string randomStr(int len)
     std::string retData;
     srand(time(NULL));
     int cnt = 0;
-    while(cnt < len)
+    while (cnt < len)
     {
-        switch((rand() % 3))
+        switch ((rand() % 3))
         {
         case 1:
             retData += ('A' + rand() % 26);
@@ -389,7 +398,7 @@ std::string randomStr(int len)
 
 int to_int(const std::string &str, int def_value)
 {
-    if(str.empty())
+    if (str.empty())
         return def_value;
     /*
     int retval = 0;
@@ -407,9 +416,10 @@ int to_int(const std::string &str, int def_value)
 
 std::string join(const string_array &arr, const std::string &delimiter)
 {
-    if(arr.size() == 0)
+    if (arr.size() == 0)
         return "";
-    if(arr.size() == 1)
+    if (arr.size() == 1)
         return arr[0];
-    return std::accumulate(arr.begin() + 1, arr.end(), arr[0], [&](const std::string &a, const std::string &b) {return a + delimiter + b; });
+    return std::accumulate(arr.begin() + 1, arr.end(), arr[0], [&](const std::string &a, const std::string &b)
+                           { return a + delimiter + b; });
 }
