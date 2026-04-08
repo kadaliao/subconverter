@@ -1,0 +1,21 @@
+# 订阅转换服务 Caddy 配置
+# 实际部署位置: /etc/caddy/Caddyfile（与其他站点合并）
+
+sub.cclsp.top, sub.liaoxingyi.com {
+    # 静态文件
+    handle /config.ini {
+        root * /root/subconverter/web
+        file_server
+    }
+    handle /rules/* {
+        root * /root/subconverter/web
+        file_server
+    }
+    handle / {
+        root * /root/subconverter/web
+        file_server
+    }
+
+    # subconverter API
+    reverse_proxy localhost:3000
+}
