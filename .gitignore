@@ -1,0 +1,4 @@
+*.backup
+*.broken
+*.bak*
+*.yaml

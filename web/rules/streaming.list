@@ -1,0 +1,18 @@
+# 流媒体平台 - 精简版
+DOMAIN-KEYWORD,netflix
+DOMAIN-KEYWORD,youtube
+DOMAIN-KEYWORD,spotify
+DOMAIN-SUFFIX,netflix.com
+DOMAIN-SUFFIX,nflxvideo.net
+DOMAIN-SUFFIX,nflximg.net
+DOMAIN-SUFFIX,youtube.com
+DOMAIN-SUFFIX,googlevideo.com
+DOMAIN-SUFFIX,ytimg.com
+DOMAIN-SUFFIX,spotify.com
+DOMAIN-SUFFIX,scdn.co
+DOMAIN-SUFFIX,twitch.tv
+DOMAIN-SUFFIX,ttvnw.net
+DOMAIN-SUFFIX,hulu.com
+DOMAIN-SUFFIX,disneyplus.com
+DOMAIN-SUFFIX,hbomax.com
+DOMAIN-SUFFIX,primevideo.com

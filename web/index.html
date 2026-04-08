@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>订阅转换</title>
+    <style>
+        body { font-family: -apple-system, sans-serif; max-width: 500px; margin: 50px auto; padding: 20px; background: #f5f5f5; }
+        .card { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h1 { text-align: center; }
+        input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; margin-bottom: 15px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background: #007aff; color: white; border: none; border-radius: 6px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        .tip { font-size: 12px; color: #888; margin-top: 15px; text-align: center; }
+        .rules { font-size: 11px; color: #999; margin-top: 10px; line-height: 1.8; }
+        .rules-title { font-weight: 600; color: #666; margin-bottom: 8px; }
+        .highlight { color: #28a745; font-weight: 600; }
+        .group-item { display: inline-block; background: #f8f9fa; padding: 2px 8px; margin: 2px; border-radius: 4px; font-size: 10px; }
+        .section { margin-top: 12px; }
+        .section-title { font-size: 11px; font-weight: 600; color: #555; margin-bottom: 4px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>订阅转换</h1>
+        <input type="text" id="url" placeholder="粘贴订阅链接">
+        <button id="btn" onclick="go()">复制配置 URL</button>
+        <p class="tip">白名单模式：已知站点直连，其余走代理 | <span class="highlight">IPv6 已关闭</span></p>
+        <div class="rules">
+            <div class="section">
+                <div class="section-title">代理分组</div>
+                <span class="group-item">🔰 节点选择</span>
+                <span class="group-item">♻️ 自动选择</span>
+                <span class="group-item">🌏 ChatGPT/Claude</span>
+                <span class="group-item">🎯 全球直连</span>
+                <span class="group-item">🐟 漏网之鱼</span>
+            </div>
+            <div class="section">
+                <div class="section-title">规则分类</div>
+                <span class="group-item">🤖 AI 平台</span>
+                <span class="group-item">📱 社交媒体</span>
+                <span class="group-item">💻 开发工具</span>
+                <span class="group-item">🎮 游戏</span>
+                <span class="group-item">🌐 通用代理</span>
+                <span class="group-item">🎯 自定义直连</span>
+                <span class="group-item">🎯 白名单直连</span>
+                <span class="group-item">🇨🇳 GEOIP 中国</span>
+                <span class="group-item">🐟 兜底代理</span>
+            </div>
+        </div>
+    </div>
+    <script>
+    function go() {
+        var u = document.getElementById("url").value;
+        if (!u) {
+            alert("请输入链接");
+            return;
+        }
+
+        var t = Date.now();
+        var result = location.origin + "/sub?target=clash&url=" + encodeURIComponent(u) +
+                     "&config=" + encodeURIComponent("https://sub.cclsp.top/config.ini?t=" + t) +
+                     "&filename=" + encodeURIComponent("lsp-enhanced.yaml");
+
+        navigator.clipboard.writeText(result).then(function() {
+            var btn = document.getElementById("btn");
+            btn.textContent = "已复制 ✓";
+            btn.style.background = "#28a745";
+            setTimeout(function() {
+                btn.textContent = "复制配置 URL";
+                btn.style.background = "#007aff";
+            }, 2000);
+        }).catch(function(err) {
+            alert("复制失败: " + err);
+        });
+    }
+    </script>
+</body>
+</html>

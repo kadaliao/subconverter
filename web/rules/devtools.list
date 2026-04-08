@@ -1,0 +1,22 @@
+# 开发工具 - 精简版
+DOMAIN-KEYWORD,github
+DOMAIN-SUFFIX,github.com
+DOMAIN-SUFFIX,githubusercontent.com
+DOMAIN-SUFFIX,githubassets.com
+DOMAIN-SUFFIX,gitlab.com
+DOMAIN-SUFFIX,stackoverflow.com
+DOMAIN-SUFFIX,stackexchange.com
+DOMAIN-SUFFIX,npmjs.com
+DOMAIN-SUFFIX,npmjs.org
+DOMAIN-SUFFIX,docker.com
+DOMAIN-SUFFIX,docker.io
+DOMAIN-SUFFIX,jetbrains.com
+DOMAIN-SUFFIX,cloudflare.com
+DOMAIN-SUFFIX,vercel.com
+DOMAIN-SUFFIX,netlify.com
+# Google 核心服务（Search / Drive / Maps / Translate / Fonts 等）
+DOMAIN-SUFFIX,google.com
+DOMAIN-SUFFIX,googleapis.com
+DOMAIN-SUFFIX,gstatic.com
+DOMAIN-SUFFIX,googleusercontent.com
+DOMAIN-SUFFIX,ggpht.com

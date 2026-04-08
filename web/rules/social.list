@@ -1,0 +1,18 @@
+# 社交媒体平台 - 精简版
+DOMAIN-KEYWORD,twitter
+DOMAIN-KEYWORD,facebook
+DOMAIN-KEYWORD,instagram
+DOMAIN-SUFFIX,t.co
+DOMAIN-SUFFIX,twimg.com
+DOMAIN-SUFFIX,x.com
+DOMAIN-SUFFIX,facebook.com
+DOMAIN-SUFFIX,fbcdn.net
+DOMAIN-SUFFIX,instagram.com
+DOMAIN-SUFFIX,cdninstagram.com
+DOMAIN-SUFFIX,threads.net
+DOMAIN-SUFFIX,reddit.com
+DOMAIN-SUFFIX,redd.it
+DOMAIN-SUFFIX,redditstatic.com
+DOMAIN-SUFFIX,discord.com
+DOMAIN-SUFFIX,discordapp.com
+DOMAIN-SUFFIX,telegram.org

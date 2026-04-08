@@ -1,0 +1,11 @@
+# 邮件服务 - 精简版
+DOMAIN-SUFFIX,gmail.com
+DOMAIN-SUFFIX,googlemail.com
+DOMAIN-SUFFIX,outlook.com
+DOMAIN-SUFFIX,hotmail.com
+DOMAIN-SUFFIX,live.com
+DOMAIN-SUFFIX,office365.com
+DOMAIN-SUFFIX,protonmail.com
+DOMAIN-SUFFIX,proton.me
+DOMAIN-SUFFIX,tutanota.com
+DOMAIN-SUFFIX,mail.yahoo.com

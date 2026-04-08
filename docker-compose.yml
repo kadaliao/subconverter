@@ -1,0 +1,11 @@
+services:
+  subconverter:
+    image: tindy2013/subconverter:latest
+    container_name: subconverter
+    restart: always
+    ports:
+      - "3000:25500"
+    volumes:
+      - ./config/rulesets.toml:/base/snippets/rulesets.toml:rw
+      - ./config/groups.toml:/base/snippets/groups.toml:rw
+      - ./config/all_base.tpl:/base/base/all_base.tpl:rw
