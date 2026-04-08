@@ -1,7 +1,8 @@
 # 订阅转换服务 Caddy 配置
 # 实际部署位置: /etc/caddy/Caddyfile（与其他站点合并）
+# 将 <your-domain> 替换为实际域名，多个域名用逗号分隔
 
-sub.cclsp.top, sub.liaoxingyi.com {
+<your-domain> {
     # 静态文件
     handle /config.ini {
         root * /root/subconverter/web
