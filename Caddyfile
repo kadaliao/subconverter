@@ -3,16 +3,17 @@
 # 将 <your-domain> 替换为实际域名
 
 <your-domain> {
-    # 规则文件静态服务
-    handle /config.ini {
+    # 订阅转换接口
+    handle /convert {
+        reverse_proxy localhost:3003
+    }
+    # sub-store 管理 API（内部使用）
+    handle /sub-store-api/* {
+        reverse_proxy localhost:3002
+    }
+    # 前端页面 + 规则文件
+    handle {
         root * /root/subconverter/web
         file_server
     }
-    handle /rules/* {
-        root * /root/subconverter/web
-        file_server
-    }
-
-    # sub-store
-    reverse_proxy localhost:3002
 }
