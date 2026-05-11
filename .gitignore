@@ -2,3 +2,4 @@
 *.broken
 *.bak*
 *.yaml
+!web/lsp-clash.yaml

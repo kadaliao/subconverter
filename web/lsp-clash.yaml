@@ -1,0 +1,124 @@
+port: 7890
+socks-port: 7891
+allow-lan: true
+mode: Rule
+log-level: info
+external-controller: 127.0.0.1:9090
+ipv6: false
+
+proxy-providers:
+  superflash:
+    type: http
+    url: "https://sub.cclsp.top/sub-store-api/download/superflash?target=clash.meta"
+    interval: 3600
+    proxy: DIRECT
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 300
+
+proxy-groups:
+  - name: 🔰 节点选择
+    type: select
+    use:
+      - superflash
+    proxies:
+      - ♻️ 自动选择
+      - 🎯 全球直连
+
+  - name: ♻️ 自动选择
+    type: url-test
+    use:
+      - superflash
+    url: http://www.gstatic.com/generate_204
+    interval: 300
+    tolerance: 50
+
+  - name: 🌏 ChatGPT/Claude
+    type: select
+    use:
+      - superflash
+    filter: "美|US|USA|United States|America|日|JP|Japan"
+    proxies:
+      - 🔰 节点选择
+      - ♻️ 自动选择
+
+  - name: 🎯 全球直连
+    type: select
+    proxies:
+      - DIRECT
+
+  - name: 🐟 漏网之鱼
+    type: select
+    proxies:
+      - 🔰 节点选择
+      - 🎯 全球直连
+      - ♻️ 自动选择
+
+rule-providers:
+  direct-custom:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://sub.cclsp.top/rules/direct.list"
+    path: ./rules/direct.list
+    interval: 86400
+
+  ai-platform:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://sub.cclsp.top/rules/ai-platform.list"
+    path: ./rules/ai-platform.list
+    interval: 86400
+
+  sr-direct:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://sub.cclsp.top/rules/sr-direct.list"
+    path: ./rules/sr-direct.list
+    interval: 86400
+
+  social:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://sub.cclsp.top/rules/social.list"
+    path: ./rules/social.list
+    interval: 86400
+
+  devtools:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://sub.cclsp.top/rules/devtools.list"
+    path: ./rules/devtools.list
+    interval: 86400
+
+  gaming:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://sub.cclsp.top/rules/gaming.list"
+    path: ./rules/gaming.list
+    interval: 86400
+
+  proxy-general:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://sub.cclsp.top/rules/proxy-general.list"
+    path: ./rules/proxy-general.list
+    interval: 86400
+
+rules:
+  - RULE-SET,direct-custom,🎯 全球直连
+  - RULE-SET,ai-platform,🌏 ChatGPT/Claude
+  - RULE-SET,sr-direct,🎯 全球直连
+  - RULE-SET,social,🔰 节点选择
+  - RULE-SET,devtools,🔰 节点选择
+  - RULE-SET,gaming,🔰 节点选择
+  - RULE-SET,proxy-general,🔰 节点选择
+  - GEOIP,CN,🎯 全球直连
+  - MATCH,🐟 漏网之鱼
