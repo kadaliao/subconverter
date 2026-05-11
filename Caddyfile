@@ -13,11 +13,6 @@
         file_server
     }
 
-    # 旧 subconverter API（兼容现有订阅链接）
-    handle /sub* {
-        reverse_proxy localhost:3000
-    }
-
-    # sub-store 前端 + 新 API
+    # sub-store
     reverse_proxy localhost:3002
 }
