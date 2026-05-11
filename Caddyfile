@@ -3,7 +3,7 @@
 # 将 <your-domain> 替换为实际域名
 
 <your-domain> {
-    # 规则文件静态服务（供 config.ini 引用）
+    # 规则文件静态服务
     handle /config.ini {
         root * /root/subconverter/web
         file_server
@@ -13,6 +13,11 @@
         file_server
     }
 
-    # sub-store（前端 + API，含 /sub-store-api/ 路径）
+    # 旧 subconverter API（兼容现有订阅链接）
+    handle /sub* {
+        reverse_proxy localhost:3000
+    }
+
+    # sub-store 前端 + 新 API
     reverse_proxy localhost:3002
 }
